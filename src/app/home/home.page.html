@@ -1,46 +1,71 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Registro
+    <ion-title class="red">
+     Le Pecas's Restaurant
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" >
+  
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Registro</ion-title>
+      <ion-title size="large">restaurante</ion-title>
     </ion-toolbar>
   </ion-header>
 
 <ion-list class="list-formulario">
   <ion-item>
-    <ion-input type="text" placeholder="Codigo" [(ngModel)]="newcomida.codigo"></ion-input>
+    <ion-input type="text" placeholder="Plato" [(ngModel)]="newPersona.cedula"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input type="text" placeholder="Nombre" [(ngModel)]="newcomida.nombre"></ion-input>
+    <ion-input type="text" placeholder="Precio" [(ngModel)]="newPersona.nombre"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input type="text" placeholder="Precio" [(ngModel)]="newcomida.precio"></ion-input>
+    <form>
+      <p class="clasificacion">
+        <input id="radio1" type="radio" name="estrellas" value="★★★★★" [(ngModel)]="newPersona.apellido"><!--
+        --><label for="radio1">★</label><!--
+        --><input id="radio2" type="radio" name="estrellas" value="★★★★" [(ngModel)]="newPersona.apellido"><!--
+        --><label for="radio2">★</label><!--
+        --><input id="radio3" type="radio" name="estrellas" value="★★★" [(ngModel)]="newPersona.apellido"><!--
+        --><label for="radio3">★</label><!--
+        --><input id="radio4" type="radio" name="estrellas" value="★★" [(ngModel)]="newPersona.apellido"><!--
+        --><label for="radio4">★</label><!--
+        --><input id="radio5" type="radio" name="estrellas" value="★" [(ngModel)]="newPersona.apellido"><!--
+        --><label for="radio5">★</label>
+      </p>
+    </form>
   </ion-item>
   <ion-item>
-    <ion-input type="text" placeholder="Imagen" [(ngModel)]="newcomida.img"></ion-input>
+    <ion-label position="floating">URL de la Imagen</ion-label>
+    <ion-input [(ngModel)]="imagenUrl"></ion-input>
   </ion-item>
-  </ion-list>
+
+  </ion-list> <br> -     -Platos a la carta- - <br><ion-icon name="fast-food-outline"></ion-icon>
 <ion-list>
-  
-  <ion-item *ngFor="let p of Comidas" >
-    <ion-label>{{p.codigo}}</ion-label>
-    <ion-label>{{p.nombre}}</ion-label>
-    <ion-label>{{p.precio}}</ion-label>
-    <ion-button (click)="delete(p)" color="danger" >
-      <ion-icon slot="icon-only" name="close-circle-outline" ></ion-icon>
-    </ion-button>
-  </ion-item>
+  <ion-item *ngFor="let p of Personas" >
+      <ion-card>
+        <img [src]="imagenUrl" *ngIf="imagenUrl">
+        <ion-card-header>
+          <ion-card-title>{{p.cedula}}</ion-card-title>
+          <ion-card-subtitle>{{p.nombre}}</ion-card-subtitle>
+        </ion-card-header>
+      
+        <ion-card-content id="radio1">
+          {{p.apellido}}
+        </ion-card-content>
+
+      </ion-card>
+      
+      <ion-button class="btn-flotante" (click)="delete(p)" color="danger">Delete
+        <ion-icon name="trash-outline" ></ion-icon>
+      </ion-button>
+    </ion-item>
 </ion-list>
-<ion-fab vertical="bottom" horizontal="end" >
-<ion-fab-button (click)="save()" size="small" color="success">
-  <ion-icon name="add-circle-outline"></ion-icon>
-</ion-fab-button>
-</ion-fab>
 </ion-content>
+<ion-fab vertical="bottom" horizontal="end" >
+  <ion-fab-button class="correcto" expand="block" (click)="buscarImagen()" (click)="save()" size="small" color="success">
+    <ion-icon name="globe" name="add"></ion-icon>
+  </ion-fab-button>
+  </ion-fab>

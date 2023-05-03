@@ -15,53 +15,66 @@ import { CommonModule } from '@angular/common';
   imports: [IonicModule,FormsModule,CommonModule],
 })
 export class HomePage {
-  private enlace:string = 'Comidas';
-  public Comidas:Item[]=[];
-  public newcomida:Item={
-    codigo: '',
+  private enlace:string = 'Personas';
+  public Personas:Item[]=[];
+  public newPersona:Item={
+    cedula: '',
     nombre: '',
-    precio: '',
-    cal: 0,
-    img: '',
+    apellido: '',
+    imagen:'',
+
     id: ''
   };
+  imagenUrl!: string;
+
+   bigImg = null;
+  bigSize = '0';
+ 
+  smallImg = null;
+  smallSize = '0';
+  
+  
   constructor(private bd:BdService, private toast:ToastService, private load:LoadingService) {
   }
+  buscarImagen() {
+    // No se hace nada en esta función ya que la URL de la imagen ya se almacena en la propiedad imagenUrl
+  }
+
   ngOnInit() {
     this.bd.get<Item>(this.enlace).subscribe(p=>{
-      this.Comidas=p;
+      this.Personas=p;
     });
+    
   }
   save(){
-    //this.load.presentLoading();
-    this.newcomida.id=this.bd.createId(this.enlace);
-    const data = this.newcomida;
-    this.bd.add<Item>(data,this.enlace,this.newcomida.id).then(()=>{
-     // this.toast.showToast("Exito al guardar","success","checkbox-outline");
-      //this.load.dismissLoading();
+    this.load.presentLoading();
+    this.newPersona.id=this.bd.createId(this.enlace);
+    const data = this.newPersona;
+    this.bd.add<Item>(data,this.enlace,this.newPersona.id).then(()=>{
+      this.toast.showToast("Exito al guardar","success","checkbox-outline");
+      this.load.dismissLoading();
       this.clean();
     }).catch(()=>{
-    //  this.toast.showToast("Error al guardar","danger","sad-outline");
+      this.toast.showToast("Error al guardar","danger","sad-outline");
     });
   }
 
   delete(p:Item){
-    //this.load.presentLoading();
-    this.bd.delete(this.enlace,p.id).then(()=>{
-    //  this.toast.showToast("Exito al Borrar","success","trash-outline");
-     // this.load.dismissLoading();
+    this.load.presentLoading();
+    this.bd.delete(`Personas`,p.id).then(()=>{
+      this.toast.showToast("Exito al Borrar","success","trash-outline");
+      this.load.dismissLoading();
     }).catch(()=>{
-      //this.toast.showToast("Error al Borrar","danger","sad-outline");
+      this.toast.showToast("Error al Borrar","danger","sad-outline");
     });
 
   }
 
   clean(){
-    this.newcomida.id="";
-    this.newcomida.codigo="";
-    this.newcomida.nombre="";
-    this.newcomida.precio="";
-    }
+    this.newPersona.id="";
+    this.newPersona.cedula="";
+    this.newPersona.nombre="";
+    this.newPersona.apellido="";
+    this.newPersona.imagen="";
+    } 
   }
-
-
